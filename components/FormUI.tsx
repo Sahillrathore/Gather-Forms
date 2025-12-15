@@ -7,7 +7,7 @@ type Option = {
 
 const FormUI = ({ jsonForm }) => {
 
-    console.log(jsonForm)
+    console.log(typeof jsonForm)
 
     return (
         <div className='w-full flex justify-center items-center'>
