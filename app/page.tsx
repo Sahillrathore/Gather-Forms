@@ -6,6 +6,7 @@ import FeatureSections from '@/components/FeatureSections';
 import ShareSection from '@/components/ShareSection';
 import FAQSection from '@/components/FAQSection';
 import HeaderLayout from '@/components/HeaderLayout';
+import Footer from '@/components/Footer';
 
 const Doodle = ({
   className,
@@ -121,6 +122,8 @@ export default function LandingPage() {
           <ShareSection />
 
           <FAQSection />
+
+          <Footer/>
 
         </div>
 

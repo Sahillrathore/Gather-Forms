@@ -11,7 +11,7 @@ const FormUI = ({ jsonForm }) => {
 
     return (
         <div className='w-full flex justify-center items-center'>
-            <div className='max-w-md shadow-sm p-2 border border-zinc-200 rounded-lg'>
+            <div className='w-full shadow-md p-3 border border-zinc-200 rounded-lg'>
                 <h2 className='text-xl text-zinc-700 font-semibold'>{jsonForm?.formTitle}</h2>
                 <h2 className='font-lg text-zinc-600'>{jsonForm?.formSubheading}</h2>
 
@@ -23,7 +23,7 @@ const FormUI = ({ jsonForm }) => {
                                     field.fieldType === 'select' ?
                                         <div>
                                             <label className='text-sm text-zinc-600 block mb-1'>{field.fieldLabel}</label>
-                                            <select>
+                                            <select className='w-full border border-zinc-300 rounded-md py-2'>
                                                 {
                                                     field?.options?.map((option: Option) => (
                                                         <option key={option.label} value={option.value} className='capitalize'>{option.label}</option>

@@ -47,12 +47,12 @@ const EditForm = ({ params }: { params: Promise<{ formId: number }> }) => {
   }
 
   return (
-    <div className="grid grid-cols-3 p-4 gap-3 min-h-screen">
-      <div className="md:col-span-1 p-4 shadow-sm border border-zinc-400/80 h-full rounded-md">
+    <div className="grid grid-cols-3 p-4 gap-5 min-h-screen max-w-7xl mx-auto">
+      <div className="md:col-span-1 p-4 shadow-sm border border-zinc-300 h-full rounded-md">
         Controller
       </div>
 
-      <div className="md:col-span-2 p-4 shadow-sm border border-zinc-400/80 h-full rounded-md">
+      <div className="md:col-span-2 p-4 shadow-sm border border-zinc-300 h-full rounded-md">
         <FormUI jsonForm={jsonForm} />
       </div>
     </div>
