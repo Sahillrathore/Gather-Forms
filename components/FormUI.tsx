@@ -1,13 +1,20 @@
-import React from 'react'
+import { Edit } from 'lucide-react';
+import React, { useState } from 'react'
+import EditFormFields from './EditFormFields';
 
 type Option = {
     label: string;
     value: string;
 }
 
-const FormUI = ({ jsonForm }) => {
+const FormUI = ({ jsonForm, onUpdate, onDelete }) => {
 
-    console.log(jsonForm)
+    // console.log(jsonForm)
+    const [editingFieldIndex, setEditingFieldIndex] = useState<number | null>(null);
+    const [editValues, setEditValues] = useState({
+        label: '',
+        placeholder: '',
+    });
 
     return (
         <div className='w-full flex justify-center items-center'>
@@ -18,7 +25,7 @@ const FormUI = ({ jsonForm }) => {
                 <div>
                     {
                         jsonForm?.formFields?.map((field, i) => (
-                            <div key={i} className='mt-4'>
+                            <div key={field.fieldLabel} className='mt-4'>
                                 {
                                     field.fieldType === 'select' ?
                                         <div>
@@ -77,7 +84,7 @@ const FormUI = ({ jsonForm }) => {
                                                         <div className='flex gap-4 flex-wrap'>
                                                             {
                                                                 <div className='flex items-center gap-2 w-full'>
-                                                                    <textarea name={field.fieldLabel} className='w-full border border-zinc-300 rounded-md min-h-20 text-sm p-1' />
+                                                                    <textarea name={field.fieldLabel} placeholder={field?.placeholder} className='w-full border border-zinc-300 rounded-md min-h-20 text-sm p-1' />
                                                                     {/* <label className='text-sm text-zinc-600 block mb-1'>{field?.fieldLabel}</label> */}
                                                                 </div>
                                                             }
@@ -86,9 +93,19 @@ const FormUI = ({ jsonForm }) => {
 
                                                     :
 
-                                                    <div>
-                                                        <label className='text-sm text-zinc-600 block mb-1'>{field.fieldLabel}</label>
-                                                        <input type={field?.fieldType} placeholder={field?.placeholder} className='border p-1.5 border-zinc-300 w-full rounded-md' />
+                                                    <div className="flex gap-2 w-full items-end relative">
+                                                        <div className="w-full">
+                                                            <label className="text-sm text-zinc-600 block mb-1">
+                                                                {field.fieldLabel}
+                                                            </label>
+                                                            <input
+                                                                type={field.fieldType}
+                                                                placeholder={field.placeholder}
+                                                                className="border p-1.5 border-zinc-300 w-full rounded-md"
+                                                            />
+                                                        </div>
+
+                                                        <EditFormFields editValues={editValues} setEditValues={setEditValues} editingFieldIndex={editingFieldIndex} setEditingFieldIndex={setEditingFieldIndex} field={field} jsonForm={jsonForm} i={i} onUpdate={onUpdate} onDelete={onDelete} />
                                                     </div>
 
                                 }
