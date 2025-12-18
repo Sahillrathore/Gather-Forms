@@ -14,6 +14,9 @@ export const usersTable = pgTable("users_table", {
 export const JsonForms = pgTable("jsonForms", {
   id: varchar("id").primaryKey(),
   jsonform: text("jsonForm").notNull(),
+  theme: varchar("theme"),
+  background: varchar("background"),
+  style: varchar("style"),
   createdBy: varchar("createdBy").notNull(),
   createdAt: varchar("createdAt").notNull(),
 });

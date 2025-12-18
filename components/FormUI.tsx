@@ -9,7 +9,7 @@ type Option = {
     value: string;
 };
 
-const FormUI = ({ jsonForm, onUpdate, onDelete, showDelete, setShowDelete }) => {
+const FormUI = ({ jsonForm, onUpdate, onDelete, showDelete, setShowDelete, theme }) => {
 
     const [editingFieldIndex, setEditingFieldIndex] = useState<number | null>(null);
     const [editValues, setEditValues] = useState({
@@ -23,7 +23,7 @@ const FormUI = ({ jsonForm, onUpdate, onDelete, showDelete, setShowDelete }) => 
     } | null>(null);
 
     return (
-        <div className="w-full flex justify-center">
+        <div className="w-full flex justify-center rounded-lg" data-theme={theme}>
             <div className="w-full shadow-md p-4 border border-zinc-200 rounded-lg">
                 {/* Form Header */}
                 <h2 className="text-xl text-zinc-700 font-semibold">

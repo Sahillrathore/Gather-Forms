@@ -8,6 +8,7 @@ import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/useToast";
 import Toast from "@/components/Toast";
+import FormThemeController from "@/components/FormThemeController";
 
 type EditFormProps = {
   params: {
@@ -24,6 +25,10 @@ const EditForm = ({ params }: { params: Promise<{ formId: number }> }) => {
   const { toast, showToast, hideToast } = useToast();
   const [showDelete, setShowDelete] = useState(false);
 
+  //theme
+  const [theme, setTheme] = useState('light');
+  const [gradientBackground, setGradientBackground] = useState('');
+
   const getFormData = async () => {
     try {
       const { data } = await axios.get(`/api/forms/${formId}`);
@@ -33,8 +38,11 @@ const EditForm = ({ params }: { params: Promise<{ formId: number }> }) => {
           ? JSON.parse(data.form.jsonform)
           : data.form?.jsonform;
 
-      setJsonForm(parsedForm);
-      console.log(parsedForm)
+      setJsonForm({ ...data?.form, jsonform: parsedForm });
+      setTheme(data?.form?.theme);
+      setGradientBackground(data?.form?.background);
+      
+      console.log({ ...data?.form, jsonform: parsedForm })
       setLoading(false);
     } catch (error) {
       console.error("Failed to fetch form", error);
@@ -44,11 +52,14 @@ const EditForm = ({ params }: { params: Promise<{ formId: number }> }) => {
   };
 
   const formFieldUpdate = async (value: {}, i: number) => {
-    jsonForm.formFields[i].fieldLabel = value.label;
-    jsonForm.formFields[i].placeholder = value.placeholder;
 
+    jsonForm.jsonform.formFields[i].fieldLabel = value.label;
+    jsonForm.jsonform.formFields[i].placeholder = value.placeholder;
     try {
-      const res = await axios.patch(`/api/forms/${formId}`, jsonForm);
+      const res = await axios.patch(`/api/forms/${formId}`, {
+        action: 'updateField',
+        data: jsonForm?.jsonform,
+      });
       console.log(res);
       showToast("Form field updated successfully", "success");
     } catch (error) {
@@ -95,11 +106,11 @@ const EditForm = ({ params }: { params: Promise<{ formId: number }> }) => {
   return (
     <div className="grid grid-cols-3 p-4 gap-5 min-h-screen max-w-7xl mx-auto">
       <div className="md:col-span-1 p-4 shadow-sm border border-zinc-300 h-full rounded-md">
-        Controller
+        <FormThemeController setTheme={setTheme} theme={theme} gradientBackground={gradientBackground} setGradientBackground={setGradientBackground} formId={formId} />
       </div>
 
-      <div className="md:col-span-2 p-4 shadow-sm border border-zinc-300 h-full rounded-md">
-        <FormUI jsonForm={jsonForm} onUpdate={formFieldUpdate} onDelete={formFieldDelete} showDelete={showDelete} setShowDelete={setShowDelete} />
+      <div className="md:col-span-2 p-4 shadow-sm border border-zinc-300 h-full rounded-md" style={{ backgroundImage: gradientBackground }}>
+        <FormUI jsonForm={jsonForm?.jsonform} onUpdate={formFieldUpdate} onDelete={formFieldDelete} showDelete={showDelete} setShowDelete={setShowDelete} theme={theme} />
       </div>
 
       {toast && (

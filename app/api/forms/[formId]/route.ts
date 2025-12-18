@@ -50,17 +50,34 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ formId
   const body = await req.json();
   const user = await currentUser();
 
+  const { action, data } = await body;
+  console.log(data, action)
+
   if (!user) return NextResponse.json({ msg: 'Unauthorized', status: 401 });
 
-  await db.update(JsonForms)
-    .set({ jsonform: body })
-    .where(and(eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress), eq(JsonForms.id, formId)))
+  if (action === "updateTheme") {
+    await db.update(JsonForms)
+      .set({ theme: data })
+      .where(and(eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress), eq(JsonForms.id, formId)))
 
-  return NextResponse.json({ msg: formId, status: 200 })
+  } else if (action === "updateBackground") {
+    await db.update(JsonForms)
+      .set({ background: data })
+      .where(and(eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress), eq(JsonForms.id, formId)))
+
+  } else if (action === "updateField") {
+    await db.update(JsonForms)
+      .set({ jsonform: data })
+      .where(and(eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress), eq(JsonForms.id, formId)))
+
+  } else {
+    return NextResponse.json({ msg: "Invalid request", status: 400 });
+  }
+
+  return NextResponse.json({ msg: 'formId', status: 200 })
 }
 
-
-// form delete
+// form field delete
 export async function DELETE(req: Request, { params }: { params: Promise<{ formId: string }> }) {
 
   try {
