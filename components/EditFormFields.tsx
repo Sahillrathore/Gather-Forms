@@ -7,21 +7,25 @@ const EditFormFields = ({ setEditValues, editValues, editingFieldIndex, setEditi
 
     return (
         < div className="relative" >
-            <Edit
-                className="cursor-pointer text-zinc-600 hover:text-black"
-                onClick={() => {
-                    setEditingFieldIndex(i);
-                    setEditValues({
-                        label: field.fieldLabel,
-                        placeholder: field.placeholder || '',
-                    });
-                }}
-            />
+            <div className='flex gap-1 items-end'>
+                <Edit
+                    className="cursor-pointer text-zinc-600 hover:text-zinc-700 transition-colors"
+                    size={20}
+                    onClick={() => {
+                        setEditingFieldIndex(i);
+                        setEditValues({
+                            label: field.fieldLabel,
+                            placeholder: field.placeholder || '',
+                        });
+                    }}
+                />
 
-            <Trash
-                className="cursor-pointer text-zinc-600 hover:text-black"
-                onClick={()=>onDelete(i)}
-            />
+                <Trash
+                    className="cursor-pointer text-red-400 hover:text-red-500 transition-colors"
+                    size={20}
+                    onClick={() => onDelete(i)}
+                />
+            </div>
 
             {/* EDIT POPOVER */}
             {

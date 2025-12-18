@@ -6,6 +6,8 @@ import { useUser } from "@clerk/nextjs";
 import React, { use, useEffect, useState } from "react";
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/useToast";
+import Toast from "@/components/Toast";
 
 type EditFormProps = {
   params: {
@@ -19,7 +21,7 @@ const EditForm = ({ params }: { params: Promise<{ formId: number }> }) => {
 
   const [jsonForm, setJsonForm] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  const { toast, showToast, hideToast } = useToast();
 
   const getFormData = async () => {
     try {
@@ -47,6 +49,7 @@ const EditForm = ({ params }: { params: Promise<{ formId: number }> }) => {
     try {
       const res = await axios.patch(`/api/forms/${formId}`, jsonForm);
       console.log(res);
+      showToast("Form field updated successfully", "success");
     } catch (error) {
       console.log(error);
     }
@@ -69,9 +72,11 @@ const EditForm = ({ params }: { params: Promise<{ formId: number }> }) => {
       const res = await axios.delete(`/api/forms/${formId}`, {
         data: { index },
       });
+      showToast("Form field deleted successfully", "success");
       console.log(res)
     } catch (error) {
       console.error(error);
+      showToast("Error deleting form field", "error");
     }
   };
 
@@ -94,6 +99,16 @@ const EditForm = ({ params }: { params: Promise<{ formId: number }> }) => {
       <div className="md:col-span-2 p-4 shadow-sm border border-zinc-300 h-full rounded-md">
         <FormUI jsonForm={jsonForm} onUpdate={formFieldUpdate} onDelete={formFieldDelete} />
       </div>
+
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={hideToast}
+          visible={true}
+        />
+      )}
+
     </div>
   );
 };
