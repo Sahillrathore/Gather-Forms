@@ -9,7 +9,36 @@ type Option = {
     value: string;
 };
 
-const FormUI = ({ jsonForm, onUpdate, onDelete, showDelete, setShowDelete, theme }) => {
+type FormField = {
+    fieldType: string;
+    fieldLabel: string;
+    placeholder?: string;
+    options?: Option[];
+};
+
+type JsonForm = {
+    formTitle?: string;
+    formSubheading?: string;
+    formFields?: FormField[];
+};
+
+type FormUIProps = {
+    jsonForm: JsonForm;
+    onUpdate: (value: { label: string; placeholder?: string }, index: number) => void;
+    onDelete: (index: number) => void;
+    showDelete: boolean;
+    setShowDelete: React.Dispatch<React.SetStateAction<boolean>>;
+    theme: string;
+};
+
+const FormUI = ({
+    jsonForm,
+    onUpdate,
+    onDelete,
+    showDelete,
+    setShowDelete,
+    theme,
+}: FormUIProps) => {
 
     const [editingFieldIndex, setEditingFieldIndex] = useState<number | null>(null);
     const [editValues, setEditValues] = useState({
@@ -152,7 +181,7 @@ const FormUI = ({ jsonForm, onUpdate, onDelete, showDelete, setShowDelete, theme
             {showDelete && (
                 <DeleteModal
                     onDelete={() => {
-                        onDelete(activeField.index);
+                        onDelete(activeField!.index);
                         setActiveField(null);
                     }}
                     //   onCancel={() => setActiveField(null)}

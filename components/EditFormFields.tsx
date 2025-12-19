@@ -1,6 +1,46 @@
 "use client";
 
+import React from "react";
 import { Edit, Trash } from "lucide-react";
+
+type Option = {
+  label: string;
+  value: string;
+};
+
+type FormField = {
+  fieldType: string;
+  fieldLabel: string;
+  placeholder?: string;
+  options?: Option[];
+};
+
+type ActiveField = {
+  index: number;
+  action: "edit" | "delete";
+} | null;
+
+type EditValues = {
+  label: string;
+  placeholder: string;
+};
+
+type EditFormFieldsProps = {
+  i: number;
+  field: FormField;
+
+  editValues: EditValues;
+  setEditValues: React.Dispatch<React.SetStateAction<EditValues>>;
+
+  activeField: ActiveField;
+  setActiveField: React.Dispatch<React.SetStateAction<ActiveField>>;
+
+  onUpdate: (value: { label: string; placeholder?: string }, index: number) => void;
+  onDelete: (index: number) => void;
+
+  setShowDelete: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditingFieldIndex: React.Dispatch<React.SetStateAction<number | null>>;
+};
 
 const EditFormFields = ({
   setEditValues,
@@ -13,7 +53,7 @@ const EditFormFields = ({
   onDelete,
   setShowDelete,
   setEditingFieldIndex,
-}) => {
+}: EditFormFieldsProps) => {
   const isEditing =
     activeField?.index === i && activeField.action === "edit";
 
@@ -27,7 +67,7 @@ const EditFormFields = ({
             setActiveField({ index: i, action: "edit" });
             setEditValues({
               label: field.fieldLabel,
-              placeholder: field.placeholder || "",
+              placeholder: field.placeholder ?? "",
             });
           }}
         />
@@ -37,8 +77,8 @@ const EditFormFields = ({
           className="cursor-pointer text-red-400 hover:text-red-500"
           onClick={() => {
             setActiveField({ index: i, action: "delete" });
-            setEditingFieldIndex(i)
-            setShowDelete(true); // or open delete confirmation
+            setEditingFieldIndex(i);
+            setShowDelete(true);
           }}
         />
       </div>
@@ -82,6 +122,7 @@ const EditFormFields = ({
               >
                 Cancel
               </button>
+
               <button
                 className="text-xs px-2 py-1 bg-black text-white rounded"
                 onClick={() => {

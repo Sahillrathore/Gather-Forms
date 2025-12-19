@@ -51,7 +51,7 @@ const EditForm = ({ params }: { params: Promise<{ formId: number }> }) => {
     }
   };
 
-  const formFieldUpdate = async (value: {}, i: number) => {
+  const formFieldUpdate = async (value: {label:string, placeholder: string}, i: number) => {
 
     jsonForm.jsonform.formFields[i].fieldLabel = value.label;
     jsonForm.jsonform.formFields[i].placeholder = value.placeholder;
@@ -71,7 +71,7 @@ const EditForm = ({ params }: { params: Promise<{ formId: number }> }) => {
     try {
       // Optimistic UI update
       const updatedFields = jsonForm.formFields.filter(
-        (_, i) => i !== index
+        (_: any, i: number) => i !== index
       );
 
       const updatedForm = {

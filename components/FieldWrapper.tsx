@@ -1,23 +1,48 @@
 "use client";
 
+import React from "react";
 import EditFormFields from "./EditFormFields";
+
+type Option = {
+  label: string;
+  value: string;
+};
+
+type FormField = {
+  fieldType: string;
+  fieldLabel: string;
+  placeholder?: string;
+  options?: Option[];
+};
+
+type ActiveField = {
+  index: number;
+  action: "edit" | "delete";
+} | null;
+
+type EditValues = {
+  label: string;
+  placeholder: string;
+};
 
 type FieldWrapperProps = {
   index: number;
-  field: any;
+  field: FormField;
   children: React.ReactNode;
 
-  // edit state
-  editValues: any;
-  setEditValues: any;
-  activeField: any;
-  setActiveField: any;
+  editValues: EditValues;
+  setEditValues: React.Dispatch<React.SetStateAction<EditValues>>;
 
-  onUpdate: Function;
-  onDelete: Function;
-  setEditingFieldIndex: Function;
-  editingFieldIndex: Function;
-  setShowDelete: Function;
+  activeField: ActiveField;
+  setActiveField: React.Dispatch<React.SetStateAction<ActiveField>>;
+
+  onUpdate: (value: { label: string; placeholder?: string }, index: number) => void;
+  onDelete: (index: number) => void;
+
+  setEditingFieldIndex: React.Dispatch<React.SetStateAction<number | null>>;
+  editingFieldIndex: number | null;
+
+  setShowDelete: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function FieldWrapper({
@@ -48,7 +73,7 @@ export default function FieldWrapper({
         onUpdate={onUpdate}
         onDelete={onDelete}
         setEditingFieldIndex={setEditingFieldIndex}
-        editingFieldIndex={editingFieldIndex}
+        // editingFieldIndex={editingFieldIndex}
         setShowDelete={setShowDelete}
       />
     </div>
