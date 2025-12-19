@@ -11,44 +11,39 @@ export async function POST(req: Request) {
     try {
         const user = await currentUser();
 
-        if (!user?.id) {
-            return NextResponse.json(
-                { error: "Unauthorized" },
-                { status: 401 }
-            );
+        if (!user) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
+        const userEmail = user.primaryEmailAddress?.emailAddress;
+        if (!userEmail) {
+            return NextResponse.json({ error: "User email not found" }, { status: 400 });
+        }
 
         const { input } = await req.json();
-
         if (!input || !input.trim()) {
-            return NextResponse.json(
-                { error: "Invalid input" },
-                { status: 400 }
-            );
+            return NextResponse.json({ error: "Invalid input" }, { status: 400 });
         }
 
-        // 1. Generate AI form
         const jsonForm = await generateAi(input);
 
-        // 2. Save to DB
         const id = generateId();
+        if (!id) {
+            throw new Error("Failed to generate ID");
+        }
 
         const res = await db
             .insert(JsonForms)
             .values({
                 id,
                 jsonform: jsonForm,
-                createdBy:
-                    user?.primaryEmailAddress?.emailAddress ??
-                    "unknown",
-                createdAt: Date.now(),
+                createdBy: userEmail,
+                createdAt: new Date().toISOString(),
             })
             .returning({ id: JsonForms.id });
 
-        return NextResponse.json({
-            id: res[0].id,
-        });
+        return NextResponse.json({ id: res[0].id });
+
     } catch (error) {
         console.error("FORM API ERROR:", error);
         return NextResponse.json(
@@ -58,29 +53,30 @@ export async function POST(req: Request) {
     }
 }
 
+
 export async function GET(req: Request) {
     try {
         const user = await currentUser();
         if (!user) {
-            return NextResponse.json(
-                { error: "Unauthorized" },
-                { status: 401 }
-            )
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        const userEmail = user?.primaryEmailAddress?.emailAddress;
+        const userEmail = user.primaryEmailAddress?.emailAddress;
+        if (!userEmail) {
+            return NextResponse.json({ error: "User email not found" }, { status: 400 });
+        }
 
-        const formsData = await db.select({
-            id: JsonForms.id,
-            createdAt: JsonForms.createdAt,
-            jsonForm: JsonForms.jsonform,
-            createdBy: JsonForms.createdBy,
-        })
+        const formsData = await db
+            .select({
+                id: JsonForms.id,
+                createdAt: JsonForms.createdAt,
+                jsonForm: JsonForms.jsonform,
+                createdBy: JsonForms.createdBy,
+            })
             .from(JsonForms)
             .where(eq(JsonForms.createdBy, userEmail))
-            .orderBy(desc(JsonForms.createdAt))
+            .orderBy(desc(JsonForms.createdAt));
 
-        // ✅ Normalize AI JSON here
         const forms = formsData.map((form) => ({
             ...form,
             jsonForm:

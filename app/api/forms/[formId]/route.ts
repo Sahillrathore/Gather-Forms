@@ -62,7 +62,6 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ formId
   const user = await currentUser();
 
   const { action, data } = await body;
-  console.log(data, action)
 
   if (!user) return NextResponse.json({ msg: 'Unauthorized', status: 401 });
   const userEmail = user?.primaryEmailAddress?.emailAddress;
