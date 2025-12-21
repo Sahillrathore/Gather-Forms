@@ -21,7 +21,6 @@ const Header = () => {
                 <div className='flex gap-5 '>
                     <Link href='/pricing' className='text-sm text-zinc-600 font-medium hover:text-zinc-800 transition-colors'>Pricing</Link>
                     {/* <Link href='/signup'>Pricing</Link> */}
-                    <input type="" />
                 </div>
 
                 <SignedOut>
