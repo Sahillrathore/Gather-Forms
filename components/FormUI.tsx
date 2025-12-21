@@ -24,10 +24,10 @@ type JsonForm = {
 
 type FormUIProps = {
     jsonForm: JsonForm;
-    onUpdate: (value: { label: string; placeholder?: string }, index: number) => void;
-    onDelete: (index: number) => void;
-    showDelete: boolean;
-    setShowDelete: React.Dispatch<React.SetStateAction<boolean>>;
+    onUpdate?: (value: { label: string; placeholder?: string }, index: number) => void;
+    onDelete?: (index: number) => void;
+    showDelete?: boolean;
+    setShowDelete?: React.Dispatch<React.SetStateAction<boolean>>;
     theme: string;
     editable?: boolean;
 };
@@ -38,7 +38,7 @@ const FormUI = ({
     onDelete,
     showDelete,
     setShowDelete,
-    theme,
+    theme = "light",
     editable = true,
 }: FormUIProps) => {
 

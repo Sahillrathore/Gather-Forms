@@ -3,6 +3,7 @@ import FormUI from '@/components/FormUI';
 import { useUser } from '@clerk/nextjs';
 import axios from 'axios';
 import { Loader } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import React, { use, useEffect, useState } from 'react'
 
@@ -52,12 +53,10 @@ const page = ({ params }: { params: Promise<{ formId: number }> }) => {
 
     return (
         <div className='w-full min-h-screen flex flex-col justify-center items-center' style={{ backgroundImage: gradientBackground }}>
-            <div className='max-w-2xl p-4 mx-auto'>
+            <div className='w-160 p-4 mx-auto'>
 
                 <FormUI
                     jsonForm={jsonForm?.jsonform}
-                    onDelete={() => { }}
-                    onUpdate={() => { }}
                     theme={theme}
                     editable={false}
                 />
@@ -65,10 +64,13 @@ const page = ({ params }: { params: Promise<{ formId: number }> }) => {
                 <button className='bg-blue-400 px-5 font-normal py-2 mt-2 text-sm text-white rounded-md'>Submit</button>
             </div>
 
-            <div className=' fixed bottom-5 left-5 flex text-white text-sm bg-gray-800 rounded-full px-4 py-1.5 gap-1'>
-                <Link href={process.env.NEXT_PUBLIC_SITE || '/'}>Created with Gather</Link>
+            <Link href={process.env.NEXT_PUBLIC_SITE || '/'} className=' fixed bottom-5 left-5 flex items-center text-white text-sm bg-gray-800 rounded-full px-1 pr-3 py-1.5 gap-1.5'>
+                <div className='p-0.5 px-1 bg-white rounded-full'>
+                    <Image src="/logoG.png" width={15} height={15} alt='logo..' className='rounded-full' />
+                </div>
+                <p className='text-xs'>Created with Gather</p>
                 {/* <p>Create you own AI Form</p> */}
-            </div>
+            </Link>
         </div>
     )
 }
