@@ -6,16 +6,16 @@ import { ChevronRight } from 'lucide-react';
 // FAQ Data based on your screenshot
 const faqData = [
   {
-    question: "Is Tally really free?",
-    answer: "Yes! 99% of Tally's features are available for free. We make money through Tally Pro, a subscription for power users who need advanced features like team collaboration, custom domains, and removal of Tally branding."
+    question: "Is Gather really free?",
+    answer: "Yes! 99% of Gather's features are available for free. We make money through Gather Pro, a subscription for power users who need advanced features like team collaboration, custom domains, and removal of Gather branding."
   },
   {
-    question: "Are Tally forms secure?",
+    question: "Are Gather forms secure?",
     answer: "Absolutely. We take security seriously. All data is encrypted in transit and at rest. We are GDPR compliant and host our data on secure servers in Europe."
   },
   {
-    question: "How does Tally compare to other form builders?",
-    answer: "Tally is the simplest form builder on the market. It works like a doc—just type your questions. No complex drag-and-drop builders. It's designed to be fast, beautiful, and completely free for most use cases."
+    question: "How does Gather compare to other form builders?",
+    answer: "Gather is the simplest form builder on the market. It works like a doc—just type your questions. No complex drag-and-drop builders. It's designed to be fast, beautiful, and completely free for most use cases."
   },
   {
     question: "How can I get started?",

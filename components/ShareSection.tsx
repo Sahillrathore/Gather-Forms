@@ -62,7 +62,7 @@ export default function ShareSection() {
             {/* Content */}
             <h3 className="text-xl font-bold text-start text-black mb-3">Embed</h3>
             <p className="text-gray-600 leading-relaxed text-start mb-8 max-w-md">
-              Seamlessly embed your forms into your website, landing page, or Notion. Whether you use WordPress, Webflow, Framer, or any other website builder, integrating Tally forms into your web pages is simple.
+              Seamlessly embed your forms into your website, landing page, or Notion. Whether you use WordPress, Webflow, Framer, or any other website builder, integrating Gather forms into your web pages is simple.
             </p>
           </div>
 
@@ -99,17 +99,17 @@ export default function ShareSection() {
             </button>
           </div>
 
-          {/* Card 2: Tally Links */}
+          {/* Card 2: Gather Links */}
           <div className="bg-white border border-zinc-300 shadow-sm  rounded-xl p-6">
             <div className="w-10 h-10 mb-4 text-[#f456c9]">
               <LinkIcon size={32} strokeWidth={1.5} />
             </div>
-            <h3 className="text-xl text-start font-bold text-black mb-3">Tally links</h3>
+            <h3 className="text-xl text-start font-bold text-black mb-3">Gather links</h3>
             <p className="text-gray-600 text-start leading-relaxed mb-6">
-              Share your unique Tally form link with anyone.
+              Share your unique Gather form link with anyone.
             </p>
             <div className="bg-gray-100 rounded-md py-2 px-4 flex justify-between items-center text-sm text-gray-600">
-               <span>tally.so/r/3qDpEY</span>
+               <span>Gather.so/r/3qDpEY</span>
                <ExternalLink size={14} className="text-gray-400" />
             </div>
           </div>

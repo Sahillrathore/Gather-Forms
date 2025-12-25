@@ -17,7 +17,7 @@ export default function FeatureSections() {
         
         {/* Subheadline */}
         <p className="text-xl text-start text-gray-700 max-w-3xl mb-12 leading-">
-          Tally makes it simple for anyone to build free online forms. No need to code — just type your questions like you would in a doc.
+          Gather makes it simple for anyone to build free online forms. No need to code — just type your questions like you would in a doc.
         </p>
 
         {/* The Pink Border Card */}
@@ -31,7 +31,7 @@ export default function FeatureSections() {
             
             {/* Card Body */}
             <p className="text-lg text-gray-700 leading-relaxed">
-              Paywalls getting in the way? Not anymore. Tally gives you unlimited forms and submissions, completely free, as long as you stay within our{' '}
+              Paywalls getting in the way? Not anymore. Gather gives you unlimited forms and submissions, completely free, as long as you stay within our{' '}
               <Link href="#" className="underline decoration-gray-400 underline-offset-4 hover:text-black">
                 fair usage guidelines
               </Link>.
