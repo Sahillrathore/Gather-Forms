@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import DashboardLayout from "./DashboardLayout";
-import { Plus } from "lucide-react";
+import { Pencil, Plus, Share2, Trash2 } from "lucide-react";
 import AiInputModal from "@/components/AiInputModal";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
@@ -82,9 +82,53 @@ const Dashboard = () => {
               return (
                 <div
                   key={form.id}
-                  className="p-4 rounded-lg border border-zinc-200 min-h-36 cursor-pointer hover:-translate-y-1 transition-transform duration-500"
-                  onClick={() => router.push(`/edit-form/${form.id}`)}
+                  
+                  className="group relative p-4 py-8 rounded-lg border border-zinc-200 min-h-36 
+                   transition-transform duration-500 hover:-translate-y-1"
                 >
+                  {/* Delete - Top Right */}
+                  <div
+                    className="absolute top-2 right-2
+                     opacity-0 translate-y-2
+                     group-hover:opacity-100 group-hover:translate-y-0
+                     transition-all duration-300"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <button className="p-1.5 bg-white border rounded-md shadow hover:text-red-600">
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+
+                  {/* Edit - Bottom Left */}
+                  <div
+                    className="absolute bottom-2 left-2
+                     opacity-0 translate-y-2
+                     group-hover:opacity-100 group-hover:translate-y-0
+                     transition-all duration-300 delay-75"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <button className="p-1.5 bg-white border rounded-md shadow hover:text-blue-600"
+                    onClick={() => router.push(`/edit-form/${form.id}`)}
+                    >
+                      <Pencil size={16} />
+                    </button>
+                  </div>
+
+                  {/* Share - Bottom Right */}
+                  <div
+                    className="absolute bottom-2 right-2
+                     opacity-0 translate-y-2
+                     group-hover:opacity-100 group-hover:translate-y-0
+                     transition-all duration-300 delay-150"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <button className="p-1.5 bg-white border rounded-md shadow hover:text-green-600"
+                    onClick={() => router.push(`/forms/live/${form.id}`)}
+                    >
+                      <Share2 size={16} />
+                    </button>
+                  </div>
+
                   <h2 className="font-semibold text-lg text-zinc-700">
                     {jsonForm.formTitle ?? "Untitled Form"}
                   </h2>
@@ -96,6 +140,7 @@ const Dashboard = () => {
               );
             })}
           </div>
+
         )}
 
         {/* EMPTY STATE */}
