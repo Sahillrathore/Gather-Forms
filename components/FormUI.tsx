@@ -8,6 +8,7 @@ import { formResponses } from "@/configs/schema";
 import { generateId } from "@/lib/generateId";
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
+import { useToast } from "@/hooks/useToast";
 
 type Option = {
     label: string;
@@ -63,6 +64,7 @@ const FormUI = ({
 
     const [editingFieldIndex, setEditingFieldIndex] = useState<number | null>(null);
     const [formData, setFormData] = useState({});
+    const { toast, showToast, hideToast } = useToast();
 
     const [editValues, setEditValues] = useState({
         label: "",
@@ -97,10 +99,18 @@ const FormUI = ({
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        const createdBy = record.createdBy || "anonymous";
         const formId = record.id || "";
+        try {
+            const res = await axios.post(`/api/form-response`, { formId, formResponse: JSON.stringify(formData) });
+            console.log(res)
+            if (res?.status === 200) {
+                console.log('toast')
+                showToast("Form submitted successfully", "success");
+            }
+        } catch (error) {
+            console.log(error)
+        }
 
-        const res = axios.post(`/api/form-response`, { formId, formResponse: JSON.stringify(formData)});
     }
 
     return (

@@ -1,5 +1,7 @@
 "use client"
 import FormUI from '@/components/FormUI';
+import Toast from '@/components/Toast';
+import { useToast } from '@/hooks/useToast';
 import { useUser } from '@clerk/nextjs';
 import axios from 'axios';
 import { Loader } from 'lucide-react';
@@ -12,7 +14,7 @@ const page = ({ params }: { params: Promise<{ formId: number }> }) => {
     const { user } = useUser();
     const { formId } = use(params);
     const [loading, setLoading] = useState(true);
-
+    const { toast, showToast, hideToast } = useToast();
     const [jsonForm, setJsonForm] = useState<any>(null);
 
     //theme
@@ -58,10 +60,10 @@ const page = ({ params }: { params: Promise<{ formId: number }> }) => {
                 <FormUI
                     jsonForm={jsonForm?.jsonform}
                     theme={theme}
+                    record={jsonForm}
                     editable={false}
                 />
 
-                <button className='bg-blue-400 px-5 font-normal py-2 mt-2 text-sm text-white rounded-md'>Submit</button>
             </div>
 
             <Link href={process.env.NEXT_PUBLIC_SITE || '/'} className=' fixed bottom-5 left-5 flex items-center text-white text-sm bg-gray-800 rounded-full px-1 pr-3 py-1.5 gap-1.5'>
@@ -71,6 +73,14 @@ const page = ({ params }: { params: Promise<{ formId: number }> }) => {
                 <p className='text-xs'>Created with Gather</p>
                 {/* <p>Create you own AI Form</p> */}
             </Link>
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={hideToast}
+                />
+            )}
         </div>
     )
 }

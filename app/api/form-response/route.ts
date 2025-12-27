@@ -10,7 +10,7 @@ export const POST = async (req: Request) => {
         const body = await req.json();
         const { formId, formResponse } = await body;
 
-        console.log(formId, formResponse)
+        // console.log(formId, formResponse)
         
         if (!formId || !formResponse) {
             return NextResponse.json(
@@ -35,6 +35,7 @@ export const POST = async (req: Request) => {
             id: id,
             formId: formId,
             formResponse: formResponse,
+            formRef: formId,
             createdBy: userEmail,
             respondedAt: new Date().toISOString(),
         })
@@ -43,7 +44,7 @@ export const POST = async (req: Request) => {
         //     { msg: "Response sent" },
         //     { status: 201 }
         // )
-        return NextResponse.json({ msg: 'success' }, { status: 201 });
+        return NextResponse.json({ msg: 'success' }, { status: 200 });
 
     } catch (error) {
         console.log(error)

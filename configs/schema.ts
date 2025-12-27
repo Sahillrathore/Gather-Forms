@@ -27,6 +27,7 @@ export const formResponses = pgTable("formResponses", {
   formResponse: text("formResponse").notNull(),
   createdBy: varchar("createdBy").notNull(),
   respondedAt: varchar("respondedAt").notNull(),
+  formRef: varchar("formRef").references(() => JsonForms.id),
 })
 
 // Export default object so drizzle-kit can pick it up for migrations
