@@ -1,4 +1,5 @@
 // configs/schema.ts
+import { timestamp } from "drizzle-orm/gel-core";
 import { serial } from "drizzle-orm/mysql-core";
 import { pgTable, text, integer, varchar } from "drizzle-orm/pg-core";
 
@@ -6,9 +7,13 @@ import { pgTable, text, integer, varchar } from "drizzle-orm/pg-core";
 // If you want auto-increment integers we can change this to a Postgres serial/sequence later.
 export const usersTable = pgTable("users_table", {
   id: varchar("id").primaryKey(),        // simple cross-driver primary key
-  name: text("name").notNull(),
-  age: integer("age").notNull(),
+  name: text("name"),
   email: text("email").notNull().unique(),
+  plan: text("plan").default("free"),
+  razorpayPaymentId: text("razorpay_payment_id"),
+  razorpayOrderId: text("razorpay_order_id"),
+  razorpaySignature: text("razorpay_signature"),
+  planActivatedAt: varchar("plan_activated_at"),
 });
 
 export const JsonForms = pgTable("jsonForms", {

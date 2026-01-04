@@ -13,7 +13,7 @@ const Header = () => {
         <header className="flex justify-between items-center bg- p-4 gap-4 h-16 border border-zinc-200">
 
             <div className='logo' onClick={()=>router.push('/')}>
-                <img src="/logo.png" className='w-24' alt="" />
+                <img src="/logo.png" className='w-24 cursor-pointer' alt="" />
                 {/* <div className='w-10 h-10 bg-linear-120 shadow-sm from-blue-300 to-indigo-700 rounded-full cursor-pointer' onClick={()=>router.push('/')}></div> */}
             </div>
 
