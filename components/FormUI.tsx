@@ -126,7 +126,7 @@ const FormUI = ({
         if(!formId) return;
         try {
             setLoading(true);
-            const res = await axios.post(`/api/form-response`, { formId, formResponse: JSON.stringify(formData) });
+            const res = await axios.post(`/api/form-response`, { formId, formResponse: JSON.stringify(formData), createdBy: record?.createdBy });
             console.log(res)
             if (res?.status === 200) {
                 showToast("Form submitted successfully", "success");

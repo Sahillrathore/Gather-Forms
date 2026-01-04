@@ -8,7 +8,7 @@ export const POST = async (req: Request) => {
     try {
 
         const body = await req.json();
-        const { formId, formResponse } = await body;
+        const { formId, formResponse, createdBy } = await body;
 
         // console.log(formId, formResponse)
         
@@ -37,7 +37,7 @@ export const POST = async (req: Request) => {
             formId: formId,
             formResponse: formResponse,
             formRef: formId,
-            createdBy: "unknownEmail",
+            createdBy: createdBy,
             respondedAt: new Date().toISOString(),
         })
 
