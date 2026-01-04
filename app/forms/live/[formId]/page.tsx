@@ -44,10 +44,10 @@ const page = ({ params }: { params: Promise<{ formId: number }> }) => {
     };
 
     useEffect(() => {
-        if (user && formId) {
+        if (formId) {
             getFormData();
         }
-    }, [user, formId]);
+    }, [formId]);
 
     if (loading) {
         return <div className="p-4 w-full min-h-screen bg-white flex items-center justify-center"><Loader className="animate-spin" /></div>;

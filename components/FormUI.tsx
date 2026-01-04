@@ -122,7 +122,8 @@ const FormUI = ({
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        const formId = record.id || "";
+        const formId = record.id;
+        if(!formId) return;
         try {
             setLoading(true);
             const res = await axios.post(`/api/form-response`, { formId, formResponse: JSON.stringify(formData) });

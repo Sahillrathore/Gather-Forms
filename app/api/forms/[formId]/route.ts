@@ -12,28 +12,13 @@ export async function GET(
     const { formId } = await params;
     console.log("FORM ID:", formId);
 
-    const user = await currentUser();
-
-    const userEmail = user?.primaryEmailAddress?.emailAddress;
-
-    if (!userEmail) {
-      throw new Error("User email not found");
-    }
-
-    if (!user?.id) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      );
-    }
-
     const result = await db
       .select()
       .from(JsonForms)
       .where(
         and(
           eq(JsonForms.id, formId),
-          eq(JsonForms.createdBy, userEmail)
+          // eq(JsonForms.createdBy, userEmail)
         )
       )
       .limit(1);

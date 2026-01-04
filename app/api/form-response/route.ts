@@ -19,24 +19,25 @@ export const POST = async (req: Request) => {
             )
         }
 
-        const user = await currentUser();
+        // console.log(formId)
+        // const user = await currentUser();
 
-        if (!user) {
-            return NextResponse.json(
-                { msg: "Unauthorized" },
-                { status: 401 }
-            )
-        }
+        // if (!user) {
+        //     return NextResponse.json(
+        //         { msg: "Unauthorized" },
+        //         { status: 401 }
+        //     )
+        // }
 
         const id = generateId();
-        const userEmail = user?.primaryEmailAddress?.emailAddress
+        // const userEmail = user?.primaryEmailAddress?.emailAddress
 
         const res = await db.insert(formResponses).values({
             id: id,
             formId: formId,
             formResponse: formResponse,
             formRef: formId,
-            createdBy: userEmail,
+            createdBy: "unknownEmail",
             respondedAt: new Date().toISOString(),
         })
 
