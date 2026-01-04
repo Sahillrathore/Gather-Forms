@@ -1,5 +1,7 @@
 "use client";
 
+import FormLoading from "@/components/FormLoading";
+import HeaderLayout from "@/components/HeaderLayout";
 import axios from "axios";
 import React, { use, useEffect, useMemo, useState } from "react";
 import * as XLSX from "xlsx";
@@ -73,74 +75,76 @@ const Page = ({ params }: { params: Promise<{ formId: string }> }) => {
   };
 
   if (loading)
-    return <div className="text-center py-10 text-gray-500">Loading responses...</div>;
+    return <FormLoading />;
 
   return (
-    <div className="min-h-screen bg-zinc-50 px-6 py-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-semibold text-zinc-800">
-            Form Responses ({responses.length})
-          </h1>
+    <HeaderLayout>
+      <div className="min-h-screen bg-zinc-50 px-6 py-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl font-semibold text-zinc-800">
+              Form Responses ({responses.length})
+            </h1>
 
-          {responses.length > 0 && (
-            <button
-              onClick={exportToExcel}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md text-sm shadow"
-            >
-              Export to Excel
-            </button>
-          )}
-        </div>
+            {responses.length > 0 && (
+              <button
+                onClick={exportToExcel}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md text-sm shadow"
+              >
+                Export to Excel
+              </button>
+            )}
+          </div>
 
-        {responses.length === 0 ? (
-          <div className="text-center text-zinc-500">No responses yet</div>
-        ) : (
-          <div className="overflow-auto bg-white rounded-xl shadow border">
-            <table className="min-w-full border-collapse">
-              <thead className="bg-zinc-100">
-                <tr>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-zinc-600">
-                    #
-                  </th>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-zinc-600">
-                    Submitted At
-                  </th>
-                  {allFields.map((field) => (
-                    <th
-                      key={field}
-                      className="px-4 py-3 text-left text-sm font-medium text-zinc-600"
-                    >
-                      {field}
+          {responses.length === 0 ? (
+            <div className="text-center text-zinc-500">No responses yet</div>
+          ) : (
+            <div className="overflow-auto bg-white rounded-xl shadow border">
+              <table className="min-w-full border-collapse">
+                <thead className="bg-zinc-100">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-sm font-medium text-zinc-600">
+                      #
                     </th>
-                  ))}
-                </tr>
-              </thead>
-
-              <tbody className="divide-y">
-                {responses.map((resp, index) => (
-                  <tr key={resp.id} className="hover:bg-zinc-50">
-                    <td className="px-4 py-3 text-sm">{index + 1}</td>
-                    <td className="px-4 py-3 text-sm text-zinc-600">
-                      {new Date(resp.respondedAt).toLocaleString()}
-                    </td>
-
+                    <th className="px-4 py-3 text-left text-sm font-medium text-zinc-600">
+                      Submitted At
+                    </th>
                     {allFields.map((field) => (
-                      <td
+                      <th
                         key={field}
-                        className="px-4 py-3 text-sm text-zinc-800 max-w-xs truncate"
+                        className="px-4 py-3 text-left text-sm font-medium text-zinc-600"
                       >
-                        {String(resp.formResponse?.[field] ?? "-")}
-                      </td>
+                        {field}
+                      </th>
                     ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                </thead>
+
+                <tbody className="divide-y">
+                  {responses.map((resp, index) => (
+                    <tr key={resp.id} className="hover:bg-zinc-50">
+                      <td className="px-4 py-3 text-sm">{index + 1}</td>
+                      <td className="px-4 py-3 text-sm text-zinc-600">
+                        {new Date(resp.respondedAt).toLocaleString()}
+                      </td>
+
+                      {allFields.map((field) => (
+                        <td
+                          key={field}
+                          className="px-4 py-3 text-sm text-zinc-800 max-w-xs truncate"
+                        >
+                          {String(resp.formResponse?.[field] ?? "-")}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </HeaderLayout>
   );
 };
 
