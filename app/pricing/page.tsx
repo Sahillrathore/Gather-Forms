@@ -17,6 +17,7 @@ import { useUser } from '@clerk/nextjs';
 import HeaderLayout from '@/components/HeaderLayout';
 import Script from "next/script";
 import { useUserContext } from '../context/userContext';
+import { useRouter } from 'next/navigation';
 
 // Shared features list since they appear identical in the screenshot
 const features = [
@@ -34,8 +35,16 @@ export default function page() {
 
   // const { user } = useUser();
   const { user, loading } = useUserContext();
+  const router = useRouter();
 
   const startPayment = async (plan) => {
+
+    if(!user) {
+      console.log('Unauthorized')
+      router.push('/sign-in');
+      return;
+    }
+    
     const res = await fetch("/api/razorpay/order", {
       method: "POST",
       body: JSON.stringify({ plan }),
