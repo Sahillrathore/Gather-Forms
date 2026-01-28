@@ -106,7 +106,7 @@ export default function LandingPage() {
                   muted
                   playsInline
                 >
-                  <source src="https://Gather.so/videos/demo/intro.mp4" type="video/mp4" />
+                  <source src="https://tally.so/videos/demo/intro.mp4#t=15" type="video/mp4" />
                 </video>
 
               </div>
