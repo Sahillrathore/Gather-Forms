@@ -45,8 +45,8 @@ const AiInputModal = ({ setIsFormOpen }: ChildProps) => {
             >
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-border/50">
-                    <h2 className="text-xl font-semibold tracking-tight">
-                        Generate with AI <Sparkles/>
+                    <h2 className="text-xl font-semibold tracking-tight flex gap-2 items-center">
+                        Generate with AI <Sparkles size={20} color="#666"/>
                     </h2>
                     <button
                         onClick={() => setIsFormOpen(false)}
