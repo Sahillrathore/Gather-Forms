@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUp, Loader2, X } from "lucide-react";
+import { ArrowUp, Loader2, Sparkles, X } from "lucide-react";
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -46,7 +46,7 @@ const AiInputModal = ({ setIsFormOpen }: ChildProps) => {
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-border/50">
                     <h2 className="text-xl font-semibold tracking-tight">
-                        Generate with AI
+                        Generate with AI <Sparkles/>
                     </h2>
                     <button
                         onClick={() => setIsFormOpen(false)}
@@ -57,9 +57,9 @@ const AiInputModal = ({ setIsFormOpen }: ChildProps) => {
                 </div>
 
                 {/* Body */}
-                <div className="p-6 space-y-4">
+                <div className="p-6 pt-4 space-y-4">
                     <div className="space-y-2">
-                        <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        <label className="text-sm mb-1.5 font-medium block peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                             Prompt
                         </label>
                         <div className="relative">

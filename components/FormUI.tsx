@@ -173,7 +173,7 @@ const FormUI = ({
                             {/*  for Select */}
                             {getNormalizedType(field.fieldType) === "select" && (
                                 <div className="px-2 pb-2 rounded-md border-zinc-400">
-                                    <label className="text-sm text-zinc-600 block mb-1">{field.fieldLabel}</label>
+                                    <label className="text-sm text-zinc-600 block mb-1">{field.fieldLabel} {field?.required && <span className="text-sm text-red-500">*</span>}</label>
                                     <select className="w-full border border-zinc-300 rounded-md py-2" required={field?.required} onChange={(e) => handleSelectChange(e, field.fieldName)}>
                                         {/* Fallback to empty array and provide a default option */}
                                         {(field.options || []).length > 0 ? (
@@ -221,7 +221,7 @@ const FormUI = ({
                             {getNormalizedType(field.fieldType) === "checkbox" && (
                                 <div className="px-2 pb-2 rounded-md border-zinc-400">
                                     <label className="text-sm text-zinc-600 block mb-1">
-                                        {field.fieldLabel}
+                                        {field.fieldLabel} {field?.required && <span className="text-sm text-red-500">*</span>}
                                     </label>
                                     <div className="flex gap-4 flex-wrap">
                                         {field.options && field.options.length > 0 ? (
@@ -248,7 +248,7 @@ const FormUI = ({
                             {field.fieldType === "textarea" && (
                                 <div className="px-2 pb-2 rounded-md border-zinc-400">
                                     <label className="text-sm text-zinc-600 block mb-1">
-                                        {field.fieldLabel}
+                                        {field.fieldLabel} {field?.required && <span className="text-sm text-red-500">*</span>}
                                     </label>
                                     <textarea
                                         placeholder={field.placeholder}
@@ -265,7 +265,7 @@ const FormUI = ({
                             ) && (
                                     <div className="px-2 pb-2 rounded-md border-zinc-400">
                                         <label className="text-sm text-zinc-600 block mb-1">
-                                            {field.fieldLabel}
+                                            {field.fieldLabel} {field?.required && <span className="text-sm text-red-500">*</span>}
                                         </label>
                                         <input
                                             type={field.fieldType}

@@ -18,33 +18,63 @@ import HeaderLayout from '@/components/HeaderLayout';
 import Script from "next/script";
 import { useUserContext } from '../context/userContext';
 import { useRouter } from 'next/navigation';
+import Toast from '@/components/Toast';
+import { useToast } from '@/hooks/useToast';
 
-// Shared features list since they appear identical in the screenshot
-const features = [
-  { icon: Infinity, text: "Unlimited forms & responses" },
-  { icon: Code2, text: "API & webhooks for automation" },
-  { icon: Gauge, text: "Control response limits & rate" },
-  { icon: ListChecks, text: "Build quizzes with scoring" },
-  { icon: Database, text: "Access form data via API" },
-  { icon: PenTool, text: "Custom branding & embed anywhere" },
-  { icon: ShieldCheck, text: "Block spam & bots automatically" },
-  { icon: Ban, text: "Filter profanity & require passwords" },
-];
+const features = {
+  monthly: [
+    { icon: Infinity, text: "Limited forms & responses" },
+    { icon: Gauge, text: "Control response" },
+    { icon: Database, text: "Access to form data" },
+    { icon: PenTool, text: "Custom branding & embed anywhere" },
+    { icon: ShieldCheck, text: "Block spam & bots automatically" },
+    { icon: Ban, text: "Filter profanity & require passwords" },
+  ],
+
+  annual: [
+    { icon: Infinity, text: "Unlimited forms & responses" },
+    { icon: Code2, text: "API & webhooks for automation" },
+    { icon: Gauge, text: "Control response limits & rate" },
+    { icon: ListChecks, text: "Build quizzes with scoring" },
+    { icon: Database, text: "Access form data via API" },
+    { icon: PenTool, text: "Custom branding & embed anywhere" },
+    { icon: ShieldCheck, text: "Block spam & bots automatically" },
+    { icon: Ban, text: "Filter profanity & require passwords" },
+  ],
+
+  lifetime: [
+    { icon: Infinity, text: "Unlimited forms & responses" },
+    { icon: Code2, text: "API & webhooks for automation" },
+    { icon: Gauge, text: "Control response limits & rate" },
+    { icon: ListChecks, text: "Build quizzes with scoring" },
+    { icon: Database, text: "Access form data via API" },
+    { icon: PenTool, text: "Custom branding & embed anywhere" },
+    { icon: ShieldCheck, text: "Block spam & bots automatically" },
+    { icon: Ban, text: "Filter profanity & require passwords" },
+  ],
+};
 
 export default function page() {
 
   // const { user } = useUser();
   const { user, loading } = useUserContext();
   const router = useRouter();
+  const { toast, showToast, hideToast } = useToast();
 
   const startPayment = async (plan) => {
+    // console.log(user)
 
-    if(!user) {
+    if (!user) {
       console.log('Unauthorized')
       router.push('/sign-in');
       return;
     }
-    
+
+    if (user.plan === plan) {
+      showToast("Plan already activated", "error");
+      return console.warn("Already purchased plan")
+    }
+
     const res = await fetch("/api/razorpay/order", {
       method: "POST",
       body: JSON.stringify({ plan }),
@@ -104,7 +134,7 @@ export default function page() {
               </div>
 
               <ul className="space-y-4 mb-10 flex-1">
-                {features.map((feature, idx) => (
+                {features.monthly.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-3 text-gray-600 text-[15px]">
                     <feature.icon className="w-5 h-5 text-[#2672ed] shrink-0" strokeWidth={1.5} />
                     <span>{feature.text}</span>
@@ -137,7 +167,7 @@ export default function page() {
               </div>
 
               <ul className="space-y-4 mb-0 w-fit flex-1">
-                {features.map((feature, idx) => (
+                {features?.lifetime.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-3 text-gray-600 text-[15px]">
                     <feature.icon className="w-5 h-5 text-[#2672ed] shrink-0" strokeWidth={1.5} />
                     <span>{feature.text}</span>
@@ -158,7 +188,7 @@ export default function page() {
             {/* === PLAN 3: Annual === */}
             <div className="p-8 lg:p-12 flex flex-col">
               <h3 className="text-2xl font-semibold text-black mb-2">Annual Plan</h3>
-              <p className="text-gray-500 text-sm mb-8">Billed annually ($192/yr) • Cancel anytime</p>
+              <p className="text-gray-500 text-sm mb-8">Billed annually (₹1000/yr) • Cancel anytime</p>
 
               <div className="flex items-baseline mb-8">
                 <span className="text-4xl font-bold text-black">₹1,000</span>
@@ -166,7 +196,7 @@ export default function page() {
               </div>
 
               <ul className="space-y-4 mb-10 flex-1">
-                {features.map((feature, idx) => (
+                {features?.annual.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-3 text-gray-600 text-[15px]">
                     <feature.icon className="w-5 h-5 text-[#2672ed] shrink-0" strokeWidth={1.5} />
                     <span>{feature.text}</span>
@@ -186,6 +216,13 @@ export default function page() {
           </div>
         </div>
       </section>
+
+      {toast && <Toast
+        message={toast.message}
+        onClose={hideToast}
+        type={toast.type}
+      />}
+
     </HeaderLayout>
   );
 }
